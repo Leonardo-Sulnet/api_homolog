@@ -42,7 +42,7 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
     $sql = "SELECT
     COALESCE(p.cpf, p.cnpj) AS Documento,
     p.nome_razaosocial AS Cliente,
-    'http://http://sulnet.net.br/sorteador/index.html?hash=' || 
+    'http://sulnet.net.br/sorteador/index.html?hash=' || 
     md5(
         replace(replace(replace(
             COALESCE(p.cpf, p.cnpj),
