@@ -4,6 +4,10 @@ $hash = $_GET["hash"];
 
 // Permitir que qualquer origem acesse este recurso
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://sulnet.net.br");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Authorization, Content-Type");
+
 
  if ( $token == '53w53WhGHHH124gfFdd13c' AND $hash != null){
 
