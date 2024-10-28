@@ -14,6 +14,10 @@ $DB_NAME="bd_roleta";
 // Permitir que qualquer origem acesse este recurso
 header("Access-Control-Allow-Origin: *");
 
+//Formatar em JSON
+// Cabeçalho para JSON
+header('Content-Type: application/json');
+
  if ( $token == '53w53WhGHHH124gfFdd13c' AND $pi != null){
 
 include_once ("conexao.php");
