@@ -16,10 +16,34 @@ $DB_NAME="bd_roleta";
 
 // Permitir que qualquer origem acesse este recurso
 header("Access-Control-Allow-Origin: *");
-
 //Formatar em JSON
 // Cabeçalho para JSON
 header('Content-Type: application/json');
+
+
+
+// Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
+$token = isset($token) ? $token : null;
+$apiPath = $_SERVER['REQUEST_URI'];  // Caminho da API que está sendo acessada
+
+// Verifica se o token foi fornecido
+if (!$token) {
+    http_response_code(401); // Unauthorized
+    echo json_encode(['error' => 'Token não fornecido']);
+    exit;
+}
+
+// Valida o token e o acesso à API
+if (validarTokenEAcesso($token, $apiPath, $pdo)) {
+    // Se o token for válido e o usuário tiver acesso à API
+    echo json_encode(['success' => 'Acesso permitido']);
+} else {
+    // Se o token for inválido ou o usuário não tiver acesso à API
+    http_response_code(403); // Forbidden
+    echo json_encode(['error' => 'Acesso negado']);
+}
+
+
 
  if ( $token == '53w53WhGHHH124gfFdd13c' AND $pi != null){
 
