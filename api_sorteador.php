@@ -1,18 +1,20 @@
 <?php
+include_once "conexao.php";
+
+
 $token = $_GET["token"];
 $hash = $_GET["hash"];
 
+
 // Permitir que qualquer origem acesse este recurso
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Origin: http://sulnet.net.br");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Authorization, Content-Type");
-
+//Formatar em JSON
+// Cabeçalho para JSON
+header('Content-Type: application/json');
 
  if ( $token == '53w53WhGHHH124gfFdd13c' AND $hash != null){
 
-include_once "conexao.php";
-;
+
 
 
 $sql = "SELECT
