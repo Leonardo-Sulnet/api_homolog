@@ -1,4 +1,7 @@
 <?php
+include_once "conexao.php";
+include_once "funcoes.php";
+
 $token = $_GET["token"];
 $pi = $_GET["pi"];
 $pf = $_GET["pf"];
@@ -20,8 +23,7 @@ header('Content-Type: application/json');
 
  if ( $token == '53w53WhGHHH124gfFdd13c' AND $pi != null){
 
-include_once ("conexao.php");
-;
+include_once "conexao.php";
 
 //$sql = "SELECT '12345678909' AS cpf_cnpj, '987654321' AS contrato, 'Elias Knebel' AS nome, '123' as hash; ";
 
