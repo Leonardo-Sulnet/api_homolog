@@ -2,11 +2,6 @@
 include_once "conexao.php";
 include_once "funcoes.php";
 
-//$token = $_GET["token"];
-$pi = $_GET["pi"];
-$pf = $_GET["pf"];
-
-
 $DB_HOST="192.168.167.38";
 $DB_PORT="5432";
 $DB_USER="user_sortedor";
@@ -38,6 +33,10 @@ if (!$token) {
 if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
     // Se o token for válido e o usuário tiver acesso à API
    // echo json_encode(['success' => 'Acesso permitido']);
+
+   $pi = $_GET["pi"];
+   $pf = $_GET["pf"];
+   
 
 
     $sql = "SELECT
@@ -121,8 +120,7 @@ $result->execute();
 
                         if (($result) and ($result->rowCount() != 0) ){
 
-             
-                               
+                                         
 
                                 while ($row = $result->fetch(PDO::FETCH_ASSOC)){
                                    // $emparray[] = mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
@@ -130,11 +128,7 @@ $result->execute();
 
 
                                 }
-                                echo json_encode(['cliente' => $emparray],JSON_UNESCAPED_UNICODE);
-                                //echo json_encode(['status' => 200, 'hash_status' => 1, 'cliente' => $emparray],JSON_UNESCAPED_UNICODE);
-                                //echo json_encode(['status' => 200, 'hash_status' => 1, 'cpf_cnpj' => $cpf_cnpj, 'contrato' => $contrato,'nome' => $nome, 'hash' => $hash ]);
-                               // echo json_encode($emparray, true);
-                                
+                                echo json_encode(['cliente' => $emparray],JSON_UNESCAPED_UNICODE);                             
                         }else{
 
                                // echo "Nenhum cliente encontrado<br>";
@@ -149,23 +143,5 @@ $result->execute();
     echo json_encode(['error' => 'Acesso negado']);
     echo json_encode(['path' => $apiPath]);
 }
-
-
-/*
- if ( $token == '53w53WhGHHH124gfFdd13c' AND $pi != null){
-
-
-
-
-
-       
-
-    }else {
-    
-            //aviso de erro
-            echo json_encode(['status' => 404, 'autenticacao' => "falhou"]);   
-
-    }
-            */
 
 ?>
