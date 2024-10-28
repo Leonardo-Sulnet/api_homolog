@@ -1,5 +1,5 @@
 <?php
-require_once 'conexao.php';
+//require_once 'conexao.php';
 
 /**
  * Valida o token e verifica se o usuário tem acesso à API especificada
@@ -9,7 +9,7 @@ require_once 'conexao.php';
  * @param PDO $pdo Conexão ao banco de dados
  * @return bool Retorna true se o token for válido e tiver acesso, false caso contrário
  */
-function validarTokenEAcesso($token, $apiPath, $pdo) {
+function validarTokenEAcesso($token, $apiPath, $conn_api) {
     // Verifica se o token está ativo e não expirado
     $sql = "SELECT t.token_id, t.user_id 
             FROM api_tokens t 
