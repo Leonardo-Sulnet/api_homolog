@@ -24,7 +24,8 @@ header('Content-Type: application/json');
 
 // Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
 $token = isset($token) ? $token : null;
-$apiPath = $_SERVER['REQUEST_URI'];  // Caminho da API que está sendo acessada
+//$apiPath = $_SERVER['REQUEST_URI'];  // Caminho da API que está sendo acessada
+$apiPath= basename($_SERVER['PHP_SELF']); 
 
 // Verifica se o token foi fornecido
 if (!$token) {
