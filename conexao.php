@@ -1,5 +1,5 @@
 <?php
-
+//Acessso ao servidor de replicação do MK
 $servidor = "187.109.17.5";
 $usuario = "cliente_r";
 $senha ="Cl13nt_R";
