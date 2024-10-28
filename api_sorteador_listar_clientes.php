@@ -2,7 +2,7 @@
 include_once "conexao.php";
 include_once "funcoes.php";
 
-$token = $_GET["token"];
+//$token = $_GET["token"];
 $pi = $_GET["pi"];
 $pf = $_GET["pf"];
 
@@ -23,7 +23,7 @@ header('Content-Type: application/json');
 
 
 // Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
-$token = isset($token) ? $token : null;
+$token = isset($_SERVER['HTTP_AUTHORIZATION']) ? $_SERVER['HTTP_AUTHORIZATION'] : null;
 $apiPath= basename($_SERVER['PHP_SELF']); 
 
 // Verifica se o token foi fornecido
