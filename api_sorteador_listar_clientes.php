@@ -36,7 +36,7 @@ if (!$token) {
 // Valida o token e o acesso à API
 if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
     // Se o token for válido e o usuário tiver acesso à API
-    echo json_encode(['success' => 'Acesso permitido']);
+   // echo json_encode(['success' => 'Acesso permitido']);
 
 
     $sql = "SELECT
@@ -120,7 +120,7 @@ $result->execute();
 
                         if (($result) and ($result->rowCount() != 0) ){
 
-                                //echo "Cliente encontrado<br>";
+             
                                
 
                                 while ($row = $result->fetch(PDO::FETCH_ASSOC)){
