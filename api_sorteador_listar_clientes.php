@@ -20,7 +20,7 @@ header("Access-Control-Allow-Origin: *");
 // Cabeçalho para JSON
 header('Content-Type: application/json');
 
-
+echo $_SERVER['HTTP_AUTHORIZATION'];
 
 // Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
 $token = isset($_SERVER['HTTP_AUTHORIZATION']) ? $_SERVER['HTTP_AUTHORIZATION'] : null;
