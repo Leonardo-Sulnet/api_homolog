@@ -34,7 +34,7 @@ if (!$token) {
 }
 
 // Valida o token e o acesso à API
-if (validarTokenEAcesso($token, $apiPath, $pdo)) {
+if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
     // Se o token for válido e o usuário tiver acesso à API
     echo json_encode(['success' => 'Acesso permitido']);
 } else {
