@@ -24,7 +24,6 @@ header('Content-Type: application/json');
 
 // Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
 $token = isset($token) ? $token : null;
-//$apiPath = $_SERVER['REQUEST_URI'];  // Caminho da API que está sendo acessada
 $apiPath= basename($_SERVER['PHP_SELF']); 
 
 // Verifica se o token foi fornecido
@@ -38,22 +37,9 @@ if (!$token) {
 if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
     // Se o token for válido e o usuário tiver acesso à API
     echo json_encode(['success' => 'Acesso permitido']);
-} else {
-    // Se o token for inválido ou o usuário não tiver acesso à API
-    http_response_code(403); // Forbidden
-    echo json_encode(['error' => 'Acesso negado']);
-    echo $apiPath;
-}
 
 
-
- if ( $token == '53w53WhGHHH124gfFdd13c' AND $pi != null){
-
-include_once "conexao.php";
-
-//$sql = "SELECT '12345678909' AS cpf_cnpj, '987654321' AS contrato, 'Elias Knebel' AS nome, '123' as hash; ";
-
-$sql = "SELECT
+    $sql = "SELECT
     COALESCE(p.cpf, p.cnpj) AS Documento,
     p.nome_razaosocial AS Cliente,
     'http://192.168.16.18/Sulnet/Sulnet/Roleta_Sulnet/Roleta_Sulnet/index.html?hash=' || 
@@ -143,7 +129,8 @@ $result->execute();
 
 
                                 }
-                                echo json_encode(['status' => 200, 'hash_status' => 1, 'cliente' => $emparray],JSON_UNESCAPED_UNICODE);
+                                echo json_encode(['cliente' => $emparray],JSON_UNESCAPED_UNICODE);
+                                //echo json_encode(['status' => 200, 'hash_status' => 1, 'cliente' => $emparray],JSON_UNESCAPED_UNICODE);
                                 //echo json_encode(['status' => 200, 'hash_status' => 1, 'cpf_cnpj' => $cpf_cnpj, 'contrato' => $contrato,'nome' => $nome, 'hash' => $hash ]);
                                // echo json_encode($emparray, true);
                                 
@@ -153,6 +140,23 @@ $result->execute();
                                 echo json_encode(['status' => 200, 'hash_status' => 0]);
                         }       
                  
+
+
+} else {
+    // Se o token for inválido ou o usuário não tiver acesso à API
+    http_response_code(403); // Forbidden
+    echo json_encode(['error' => 'Acesso negado']);
+    echo $apiPath;
+}
+
+
+/*
+ if ( $token == '53w53WhGHHH124gfFdd13c' AND $pi != null){
+
+
+
+
+
        
 
     }else {
@@ -161,5 +165,6 @@ $result->execute();
             echo json_encode(['status' => 404, 'autenticacao' => "falhou"]);   
 
     }
+            */
 
 ?>
