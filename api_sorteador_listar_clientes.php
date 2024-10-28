@@ -146,7 +146,7 @@ $result->execute();
     // Se o token for inválido ou o usuário não tiver acesso à API
     http_response_code(403); // Forbidden
     echo json_encode(['error' => 'Acesso negado']);
-    echo $apiPath;
+    echo json_encode(['path' => $apiPath]);
 }
 
 
