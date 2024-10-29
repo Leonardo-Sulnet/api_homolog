@@ -53,13 +53,13 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
         $stmt = $conn_api->prepare($sql);
 
         // Executar a inserção com os parâmetros
-        $stmt->execute([
+        $executionStatus = $stmt->execute([
             ':token' => $token,
             ':api_endpoint' => $endpoint,
             ':request_params' => json_encode($params), // Armazenar os parâmetros como JSON
             ':client_ip' => $client_ip
         ]);
-        echo 'olaaaaa mundo: '.$stm;
+        echo 'olaaaaa mundo: '.$executionStatu;
     } catch (PDOException $e) {
         // Tratar erros de conexão ou inserção no banco
         error_log('Erro ao registrar log da API: ' . $e->getMessage());
