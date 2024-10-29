@@ -55,9 +55,9 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
         // Executar a inserção com os parâmetros
         echo $token;
         echo $endpoint;
-        echo $params;
+        echo json_encode($params);
         echo $client_ip;
-        
+
         $executionStatus = $stmt->execute([
             ':token' => $token,
             ':api_endpoint' => $endpoint,
