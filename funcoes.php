@@ -50,23 +50,31 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
             // Ativar o modo de erros para lançar exceções
            // $conn_api->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-           // $sql = "INSERT INTO public.api_logs (token, api_endpoint, request_params, client_ip)
+           $sql = "INSERT INTO public.api_logs (token, api_endpoint, request_params, client_ip)
            //         VALUES (:token, :endpoint, :params, :client_ip)";
-           $sql = "SELECT * FROM public.api_logs ORDER BY id DESC LIMIT 100";
+           //$sql = "SELECT * FROM public.api_logs ORDER BY id DESC LIMIT 100";
         
             // Preparar a declaração
             $stmt = $conn_api->prepare($sql);
 
             // Vincular os parâmetros
-          //  $stmt->bindParam(':token', $token);
-          // $stmt->bindParam(':endpoint', $endpoint);
-         //   $stmt->bindParam(':params', $params);
-          //  $stmt->bindParam(':client_ip', $client_ip);
+            $stmt->bindParam(':token', $token);
+            $stmt->bindParam(':endpoint', $endpoint);
+            $stmt->bindParam(':params', $params);
+            $stmt->bindParam(':client_ip', $client_ip);
 
-          //  echo $sql;
-            // Executar a inserção com os parâmetros
+                        // Exibir o SQL com os valores substituídos
+            $debug_sql = str_replace(
+                [':token', ':endpoint', ':params', ':client_ip'],
+                [$conn_api->quote($token), $conn_api->quote($endpoint), $conn_api->quote($params), $conn_api->quote($client_ip)],
+                $sql
+            );
+
+            // Exibe o SQL com os valores substituídos
+            echo $debug_sql;
+
             $stmt->execute();
-            echo "oi".$stmt;
+            echo "oi";
            
             
     } catch (PDOException $e) {
