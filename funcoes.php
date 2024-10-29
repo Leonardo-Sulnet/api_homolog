@@ -58,9 +58,11 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
             $stmt->bindParam(':endpoint', $endpoint);
             $stmt->bindParam(':params', $params);
             $stmt->bindParam(':client_ip', $client_ip);
+
+            echo $conn_api;
             // Executar a inserção com os parâmetros
             $executionStatus = $stmt->execute();
-
+    
             // Verificar o status da execução
             if ($executionStatus) {
                 echo 'olaaaaa mundo: ' . $executionStatus;
