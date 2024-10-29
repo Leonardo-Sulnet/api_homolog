@@ -59,19 +59,12 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
             $stmt->bindParam(':params', $params);
             $stmt->bindParam(':client_ip', $client_ip);
 
-            echo $conn_api;
+            echo $sql;
             // Executar a inserção com os parâmetros
-            $executionStatus = $stmt->execute();
+            $stmt->execute();
     
-            // Verificar o status da execução
-            if ($executionStatus) {
-                echo 'olaaaaa mundo: ' . $executionStatus;
-            } else {
-                // Se a execução falhar, mostrar informações do erro
-                $errorInfo = $stmt->errorInfo();
-                echo 'Erro ao executar a query: ' . $errorInfo[2];
-            }
-        
+           
+            
     } catch (PDOException $e) {
         // Tratar erros de conexão ou inserção no banco
         error_log('Erro ao registrar log da API: ' . $e->getMessage());
