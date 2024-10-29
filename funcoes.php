@@ -47,18 +47,29 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
         $params = json_encode($params);
 
         try {
-        // Preparar a query SQL
-        $sql = "INSERT INTO api_logs (token, api_endpoint, request_params, client_ip)
-                VALUES ('$token', '$endpoint', '$params', '$client_ip');";
-      
-        // Preparar a declaração
-        $stmt = $conn_api->prepare($sql);
+            $sql = "INSERT INTO api_logs (token, api_endpoint, request_params, client_ip)
+                    VALUES (:token, :endpoint, :params, :client_ip)";
+        
+            // Preparar a declaração
+            $stmt = $conn_api->prepare($sql);
 
-        // Executar a inserção com os parâmetros
-        echo $sql;
+            // Vincular os parâmetros
+            $stmt->bindParam(':token', $token);
+            $stmt->bindParam(':endpoint', $endpoint);
+            $stmt->bindParam(':params', $params);
+            $stmt->bindParam(':client_ip', $client_ip);
+            // Executar a inserção com os parâmetros
+            $executionStatus = $stmt->execute();
 
-        $executionStatus = $stmt->execute();
-        echo 'olaaaaa mundo: '.$executionStatus;
+            // Verificar o status da execução
+            if ($executionStatus) {
+                echo 'olaaaaa mundo: ' . $executionStatus;
+            } else {
+                // Se a execução falhar, mostrar informações do erro
+                $errorInfo = $stmt->errorInfo();
+                echo 'Erro ao executar a query: ' . $errorInfo[2];
+            }
+        
     } catch (PDOException $e) {
         // Tratar erros de conexão ou inserção no banco
         error_log('Erro ao registrar log da API: ' . $e->getMessage());
