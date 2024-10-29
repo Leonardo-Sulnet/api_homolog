@@ -20,7 +20,17 @@ $headers = getallheaders();
 
 // Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
 $token = isset($headers['Authorization']) ? $headers['Authorization'] : null;
-$apiPath= basename($_SERVER['PHP_SELF']); 
+$apiPath = basename($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : null;; 
+
+
+// LOG da REQUEST DE API
+//$user_id = 1;  // Exemplo de ID de usuário autenticado
+$params = $_GET;  // Parâmetros da requisição (GET) ou $_POST para POST requests
+$client_ip = $_SERVER['REMOTE_ADDR'];
+
+// Registrar a requisição na tabela api_logs
+logApiRequest($conn_api,  $token, $apiPath, $params, $client_ip);
+
 
 // Verifica se o token foi fornecido
 if (!$token) {
@@ -143,5 +153,8 @@ $result->execute();
     echo json_encode(['error' => 'Acesso negado']);
     echo json_encode(['path' => $apiPath]);
 }
+
+
+
 
 ?>
