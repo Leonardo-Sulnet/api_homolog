@@ -44,7 +44,7 @@ function validarTokenEAcesso($token, $apiPath, $conn_api) {
 }
 
 function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
-        $params = json_encode($params);
+        $params = "teste";
 
         try {
             // Ativar o modo de erros para lançar exceções
