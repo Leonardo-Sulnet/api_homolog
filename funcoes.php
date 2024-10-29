@@ -59,7 +59,7 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
             ':request_params' => json_encode($params), // Armazenar os parâmetros como JSON
             ':client_ip' => $client_ip
         ]);
-        echo 'olaaaaa mundo';
+        echo 'olaaaaa mundo: '.$stm;
     } catch (PDOException $e) {
         // Tratar erros de conexão ou inserção no banco
         error_log('Erro ao registrar log da API: ' . $e->getMessage());
