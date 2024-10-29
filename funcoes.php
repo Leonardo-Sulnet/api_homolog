@@ -47,6 +47,9 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
         $params = json_encode($params);
 
         try {
+            // Ativar o modo de erros para lançar exceções
+            $conn_api->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
             $sql = "INSERT INTO api_logs (token, api_endpoint, request_params, client_ip)
                     VALUES (:token, :endpoint, :params, :client_ip)";
         
@@ -62,7 +65,7 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
             echo $sql;
             // Executar a inserção com os parâmetros
             $stmt->execute();
-    
+            
            
             
     } catch (PDOException $e) {
