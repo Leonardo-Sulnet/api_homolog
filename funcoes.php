@@ -44,7 +44,7 @@ function validarTokenEAcesso($token, $apiPath, $conn_api) {
 }
 
 function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
-        $params = "teste";
+        $params = json_encode($params);
 
         try {
             // Ativar o modo de erros para lançar exceções
@@ -63,18 +63,8 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
             $stmt->bindParam(':params', $params);
             $stmt->bindParam(':client_ip', $client_ip);
 
-            // Exibir o SQL com os valores substituídos
-            $debug_sql = str_replace(
-                [':token', ':endpoint', ':params', ':client_ip'],
-                [$conn_api->quote($token), $conn_api->quote($endpoint), $conn_api->quote($params), $conn_api->quote($client_ip)],
-                $sql
-            );
-
-            // Exibe o SQL com os valores substituídos
-            echo "TESTE: ".$debug_sql;
-
             $stmt->execute();
-            echo "oi";
+         
            
             
     } catch (PDOException $e) {
