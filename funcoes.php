@@ -45,7 +45,7 @@ function validarTokenEAcesso($token, $apiPath, $conn_api) {
 
 function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
         $params = json_encode($params);
-        
+
         try {
         // Preparar a query SQL
         $sql = "INSERT INTO api_logs (token, api_endpoint, request_params, client_ip)
@@ -55,10 +55,7 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
         $stmt = $conn_api->prepare($sql);
 
         // Executar a inserção com os parâmetros
-        echo $token;
-        echo $endpoint;
-        echo json_encode($params);
-        echo $client_ip;
+        echo $sql;
 
         $executionStatus = $stmt->execute();
         echo 'olaaaaa mundo: '.$executionStatus;
