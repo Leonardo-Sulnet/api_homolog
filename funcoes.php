@@ -51,7 +51,7 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
            // $conn_api->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
            $sql = "INSERT INTO public.api_logs (token, api_endpoint, request_params, client_ip)
-           //         VALUES (:token, :endpoint, :params, :client_ip)";
+                   VALUES (:token, :endpoint, :params, :client_ip)";
            //$sql = "SELECT * FROM public.api_logs ORDER BY id DESC LIMIT 100";
         
             // Preparar a declaração
