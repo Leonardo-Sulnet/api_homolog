@@ -47,7 +47,7 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
     try {
         // Preparar a query SQL
         $sql = "INSERT INTO api_logs (token, api_endpoint, request_params, client_ip)
-                VALUES (:token, :api_endpoint, :request_params, :client_ip)";
+                VALUES ($token, $endpoint, $params, $client_ip)";
       
         // Preparar a declaração
         $stmt = $conn_api->prepare($sql);
@@ -58,12 +58,7 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
         echo json_encode($params);
         echo $client_ip;
 
-        $executionStatus = $stmt->execute([
-            ':token' => $token,
-            ':api_endpoint' => $endpoint,
-            ':request_params' => json_encode($params), // Armazenar os parâmetros como JSON
-            ':client_ip' => $client_ip
-        ]);
+        $executionStatus = $stmt->execute();
         echo 'olaaaaa mundo: '.$executionStatus;
     } catch (PDOException $e) {
         // Tratar erros de conexão ou inserção no banco
