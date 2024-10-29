@@ -66,7 +66,7 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
           //  echo $sql;
             // Executar a inserção com os parâmetros
             $stmt->execute();
-            echo "oi";
+            echo "oi".$stmt;
            
             
     } catch (PDOException $e) {
