@@ -43,14 +43,14 @@ function validarTokenEAcesso($token, $apiPath, $conn_api) {
     return $apiAccess ? true : false;
 }
 
-function logApiRequest($conn, $token, $endpoint, $params, $client_ip) {
+function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
     try {
         // Preparar a query SQL
         $sql = "INSERT INTO api_logs (token, api_endpoint, request_params, client_ip)
                 VALUES (:token, :api_endpoint, :request_params, :client_ip)";
-        
+        echo 'olaaaaa mundo';
         // Preparar a declaração
-        $stmt = $conn->prepare($sql);
+        $stmt = $conn_api->prepare($sql);
 
         // Executar a inserção com os parâmetros
         $stmt->execute([
