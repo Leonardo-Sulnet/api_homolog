@@ -20,7 +20,7 @@ $headers = getallheaders();
 
 // Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
 $token = isset($headers['Authorization']) ? $headers['Authorization'] : null;
-$apiPath = basename($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : null; 
+$apiPath = !empty($_SERVER['PHP_SELF']) ? basename($_SERVER['PHP_SELF']) : null;
 
 
 // LOG da REQUEST DE API
