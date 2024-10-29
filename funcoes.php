@@ -53,7 +53,7 @@ function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
            // $sql = "INSERT INTO public.api_logs (token, api_endpoint, request_params, client_ip)
            //         VALUES (:token, :endpoint, :params, :client_ip)";
            $sql = "INSERT INTO api_logs(token,api_endpoint,request_params,client_ip)
-           VALUES('Hsgda9gda953w53WhGHHH124gfFdd13c','api_sorteador_listar_clientes.php','tete','192.168.16.229');";
+           VALUES('Hsgda9gda953w53WhGHHH124gfFdd13c','api_sorteador_listar_clientes.php','tete','192.168.16.229')";
         
             // Preparar a declaração
             $stmt = $conn_api->prepare($sql);
