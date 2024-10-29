@@ -29,7 +29,7 @@ $params = $_GET;  // Parâmetros da requisição (GET) ou $_POST para POST reque
 $client_ip = $_SERVER['REMOTE_ADDR'];
 
 // Registrar a requisição na tabela api_logs
-logApiRequest($conn_api,  $token, $apiPath, $params, $client_ip);
+logApiRequest( $token, $apiPath, $params, $client_ip);
 
 
 // Verifica se o token foi fornecido

@@ -1,5 +1,5 @@
 <?php
-//require_once 'conexao.php';
+require_once 'conexao.php';
 
 /**
  * Valida o token e verifica se o usuário tem acesso à API especificada
@@ -43,7 +43,7 @@ function validarTokenEAcesso($token, $apiPath, $conn_api) {
     return $apiAccess ? true : false;
 }
 
-function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
+function logApiRequest($token, $endpoint, $params, $client_ip) {
         $params = json_encode($params);
 
         try {
