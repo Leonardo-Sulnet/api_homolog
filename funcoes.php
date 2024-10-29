@@ -44,7 +44,9 @@ function validarTokenEAcesso($token, $apiPath, $conn_api) {
 }
 
 function logApiRequest($conn_api, $token, $endpoint, $params, $client_ip) {
-    try {
+        $params = json_encode($params);
+        
+        try {
         // Preparar a query SQL
         $sql = "INSERT INTO api_logs (token, api_endpoint, request_params, client_ip)
                 VALUES ($token, $endpoint, $params, $client_ip)";
