@@ -133,6 +133,7 @@ WHERE
 ORDER BY
   ca.dt_ativacao DESC;
     ";
+    echo $sql;
 /*
     $sql = "SELECT
     COALESCE(p.cpf, p.cnpj) AS Documento,
