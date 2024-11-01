@@ -114,12 +114,12 @@ LEFT JOIN (
 ) AS r ON r.contrato = ca.codcontrato
 WHERE
     ca.contrato_ativo = 1
-    --AND 'VENDA_CRM' IN ('ATIVA','REATIVA')
+    AND VENDA_CRM IN (ATIVA,REATIVA)
     AND ca.codplano IN (833, 1322,1330,1492,1501,1462,1458,1457,1456,1468,1467,1469,1501,1492,1330,1368)
     AND DATE_TRUNC('day', ca.dt_ativacao) BETWEEN DATE_TRUNC('day', '$pi'::date) AND DATE_TRUNC('day', '$pf'::date)
 ORDER BY
   ca.dt_ativacao DESC";
-    echo $sql;
+ //   echo $sql;
 /*
     $sql = "SELECT
     COALESCE(p.cpf, p.cnpj) AS Documento,
