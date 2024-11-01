@@ -114,7 +114,7 @@ LEFT JOIN (
 ) AS r ON r.contrato = ca.codcontrato
 WHERE
     ca.contrato_ativo = 1
-    AND mk_crm_leads.venda_crm IN (1,2)
+    AND vi_bi_crm.venda_crm IN (1,2)
     AND ca.codplano IN (833, 1322,1330,1492,1501,1462,1458,1457,1456,1468,1467,1469,1501,1492,1330,1368)
     AND DATE_TRUNC('day', ca.dt_ativacao) BETWEEN DATE_TRUNC('day', '$pi'::date) AND DATE_TRUNC('day', '$pf'::date)
 ORDER BY
