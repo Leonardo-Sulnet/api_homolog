@@ -116,7 +116,7 @@ LEFT JOIN (
         descricao_premio,
         dt_hora_insert
     FROM 
-        dblink('host=''${DB_HOST}'' port=''${DB_PORT}'' dbname=''${DB_NAME}'' user=''$DB_USER'' password=''${DB_PASSWORD}''',
+        dblink('host=$DB_HOST port=$DB_PORT dbname=$DB_NAME user=$DB_USER password=$DB_PASSWORD',
                 'SELECT id_ganhador, nome, documento, contrato, documento_contrato_hash, ganhador.id_premio, descricao_premio, dt_hora_insert
                  FROM ganhador  
                  LEFT JOIN premios ON premios.id_premio = ganhador.id_premio
