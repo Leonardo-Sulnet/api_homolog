@@ -48,22 +48,11 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
    $pf = $_GET["pf"];
    
 
-    $sql = "SELECT
-ca.cd_lead as lead,
-    p.nome_razaosocial AS cliente,
-    COALESCE(p.cpf, p.cnpj) AS documento,
-ca.codcontrato AS contrato,
+    $sql = "SELECT ca.cd_lead as lead,  p.nome_razaosocial AS cliente, COALESCE(p.cpf, p.cnpj) AS documento, ca.codcontrato AS contrato,
     'http://sulnet.net.br/sorteador/index.html?hash=' || 
-    md5(
-        replace(replace(replace(
-            COALESCE(p.cpf, p.cnpj),
-            '.', ''), '-', ''), ' ', '')
-    ) || ca.codcontrato::text AS hash,
-
-    
+    md5(replace(replace(replace(COALESCE(p.cpf, p.cnpj),'.', ''), '-', ''), ' ', '')) || ca.codcontrato::text AS hash,
     ca.descricao_plano AS descricao_plano,
-    
-    CASE
+        CASE
         WHEN ca.contrato_ativo = 1 THEN 'Ativo'
         ELSE 'Não Ativo'
     END AS status,
@@ -74,7 +63,6 @@ ca.codcontrato AS contrato,
     r.descricao_premio AS premio,
 to_char(ca.dt_ativacao,'YYYY-MM-DD') AS ativacao,
     TO_CHAR(r.dt_hora_insert, 'YYYY-MM-DD') AS data_insert
-
 FROM
     mk_pessoas p
 LEFT JOIN (
@@ -130,7 +118,7 @@ WHERE
     AND ca.codplano IN (833, 1322,1330,1492,1501,1462,1458,1457,1456,1468,1467,1469,1501,1492,1330,1368)
     AND DATE_TRUNC('day', ca.dt_ativacao) BETWEEN DATE_TRUNC('day', '$pi'::date) AND DATE_TRUNC('day', '$pf'::date)
 ORDER BY
-  ca.dt_ativacao DESC;
+  ca.dt_ativacao DESC
     ";
     echo $sql;
 /*
