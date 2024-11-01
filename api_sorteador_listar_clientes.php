@@ -82,7 +82,7 @@ LEFT JOIN (
         mk_contratos.cliente,
         mk_contratos.codcontrato,
         mk_planos_acesso.codplano,
-        mk_contratos.cd_lead, -- Adicionando cd_lead para o JOIN com vi_bi_crm
+        mk_contratos.cd_lead,
         MAX(
             CASE
                 WHEN mk_contratos.cancelado = 'N' AND (mk_contratos.suspenso = 'N' OR mk_contratos.suspenso IS NULL) THEN 1
@@ -104,7 +104,7 @@ LEFT JOIN (
             END
         ) = 1
 ) AS ca ON p.codpessoa = ca.cliente
-LEFT JOIN vi_bi_crm ON vi_bi_crm.codigo_lead = ca.cd_lead -- Novo JOIN adicionado
+LEFT JOIN vi_bi_crm ON vi_bi_crm.codigo_lead = ca.cd_lead
 LEFT JOIN (
     SELECT 
         id_ganhador, 
@@ -117,7 +117,6 @@ LEFT JOIN (
         dt_hora_insert
     FROM 
         dblink('host=''${DB_HOST}'' port=''${DB_PORT}'' dbname=''${DB_NAME}'' user=''$DB_USER'' password=''${DB_PASSWORD}''',
-        --dblink('host=192.168.167.38 port=5432 dbname=bd_roleta user=postgres password=0yC-:;2_%B4\\',
                 'SELECT id_ganhador, nome, documento, contrato, documento_contrato_hash, ganhador.id_premio, descricao_premio, dt_hora_insert
                  FROM ganhador  
                  LEFT JOIN premios ON premios.id_premio = ganhador.id_premio
