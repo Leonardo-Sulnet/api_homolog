@@ -42,3 +42,36 @@ Exemplo:    PI Value: 2024-10-01
 		}
 }
 ```
+
+
+## API -> api_sorteador.php
+
+- Tem como objetivo validar se o HASH informado pertence a um cliente com contrato ativo/suspenso. Caso não pertencer resposta será não encontrado. Caso localizado a resposta será com alguns dados do cliente.
+- Essa API tem como obrigatório o preenchimento via GET dos Parametro HASH.
+Exemplo:    hash: hdfousgdoufguogduif12312
+
+#### `GET /api_sorteador.php`##
+
+##### Exemplo de Resposta para HASH Válido:
+```json
+{
+	"status": 200,
+	"hash_status": 1,
+	"cliente": [
+		{
+			"cpf_cnpj": "845822xxxx",
+			"nome": "DAVID SEVERO NETO",
+			"hash": "8dfacf39b569efsdfs1cf8faeb164fxxx835",
+			"contrato": xxx835
+		}
+	]
+}
+```
+
+##### Exemplo de Resposta para HASH não Válido:
+```json
+{
+	"status": 200,
+	"hash_status": 0
+}
+```
