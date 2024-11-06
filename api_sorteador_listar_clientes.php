@@ -48,21 +48,33 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
    $pf = $_GET["pf"];
    
 
-    $sql = "SELECT ca.cd_lead as lead,  p.nome_razaosocial AS cliente, COALESCE(p.cpf, p.cnpj) AS documento, ca.codcontrato AS contrato,
+    $sql = "SELECT
+    ca.cd_lead AS lead,  
+    p.nome_razaosocial AS cliente, 
+    COALESCE(p.cpf, p.cnpj) AS documento, 
+    ca.codcontrato AS contrato,
+   CASE
+        WHEN ca.cancelado = 'S' THEN 'Cancelado'
+        WHEN ca.cancelado = 'N' AND ca.suspenso = 'S' THEN 'Suspenso'
+        WHEN ca.cancelado = 'N' AND (ca.suspenso = 'N' OR ca.suspenso IS NULL) THEN 'Ativo'
+        ELSE NULL
+    END AS status_contrato,
     'http://sulnet.net.br/sorteador/index.html?hash=' ||
     md5(replace(replace(replace(COALESCE(p.cpf, p.cnpj),'.', ''), '-', ''), ' ', '')) || ca.codcontrato::text AS hash,
     ca.descricao_plano AS descricao_plano,
-        CASE
-        WHEN ca.contrato_ativo = 1 THEN 'Ativo'
-        ELSE 'Não Ativo'
-    END AS status,
     r.documento AS documento_ganhador,
     r.contrato AS contrato_ganhador,
     r.nome AS nome_ganhador,
     r.id_premio AS id_premio,
     r.descricao_premio AS premio,
+    to_char(ca.adesao,'YYYY-MM-DD') AS adesao,
     to_char(ca.dt_ativacao,'YYYY-MM-DD') AS ativacao,
-    TO_CHAR(r.dt_hora_insert, 'YYYY-MM-DD') AS data_insert
+    TO_CHAR(r.dt_hora_insert, 'YYYY-MM-DD') AS data_insert,
+    usr_nome AS vendedor,
+    usr_login AS login
+    
+ 
+
 FROM
     mk_pessoas p
 LEFT JOIN (
@@ -71,29 +83,21 @@ LEFT JOIN (
         mk_contratos.codcontrato,
         mk_planos_acesso.codplano,
         mk_contratos.cd_lead,
-        MAX(
-            CASE
-                WHEN mk_contratos.cancelado = 'N' AND (mk_contratos.suspenso = 'N' OR mk_contratos.suspenso IS NULL) THEN 1
-                ELSE 0
-            END
-        ) AS contrato_ativo,
+        mk_contratos.cancelado,
+        mk_contratos.suspenso,
+        MAX(mk_contratos.adesao) AS adesao,
         MAX(mk_contratos.dt_ativacao) AS dt_ativacao,
         MAX(mk_planos_acesso.descricao) AS descricao_plano
     FROM
         mk_contratos
     LEFT JOIN mk_planos_acesso ON mk_planos_acesso.codplano = mk_contratos.plano_acesso
     GROUP BY
-        mk_contratos.cliente, mk_contratos.codcontrato, mk_planos_acesso.codplano, mk_contratos.cd_lead
-    HAVING
-        MAX(
-            CASE
-                WHEN mk_contratos.cancelado = 'N' AND (mk_contratos.suspenso = 'N' OR mk_contratos.suspenso IS NULL) THEN 1
-                ELSE 0
-            END
-        ) = 1
+        mk_contratos.cliente, mk_contratos.codcontrato, mk_planos_acesso.codplano, mk_contratos.cd_lead, mk_contratos.cancelado, mk_contratos.suspenso
 ) AS ca ON p.codpessoa = ca.cliente
 
-LEFT JOIN mk_crm_leads on mk_crm_leadS.codlead = ca.cd_lead
+LEFT JOIN mk_crm_leads on mk_crm_leads.codlead = ca.cd_lead
+LEFT JOIN mk_crm_operadores operadorcrm ON mk_crm_leads.operador_responsavel = operadorcrm.cd_operador
+FULL JOIN fr_usuario usuario ON operadorcrm.cd_operador = usuario.usr_codigo
 LEFT JOIN (
     SELECT
         id_ganhador,
@@ -105,22 +109,20 @@ LEFT JOIN (
         descricao_premio,
         dt_hora_insert
     FROM
-    dblink('host=$DB_HOST port=$DB_PORT dbname=$DB_NAME user=$DB_USER password=$DB_PASSWORD',
-                'SELECT id_ganhador, nome, documento, contrato, documento_contrato_hash, ganhador.id_premio, descricao_premio, dt_hora_insert
-                 FROM ganhador
-                 LEFT JOIN premios ON premios.id_premio = ganhador.id_premio
-                '
-                )
-    AS roleta_data(id_ganhador INT, nome TEXT, documento TEXT, contrato TEXT, documento_contrato_hash TEXT, id_premio INT, descricao_premio TEXT, dt_hora_insert DATE)
+dblink('host=$DB_HOST port=$DB_PORT dbname=$DB_NAME user=$DB_USER password=$DB_PASSWORD', 
+            'SELECT id_ganhador, nome, documento, contrato, documento_contrato_hash, ganhador.id_premio, descricao_premio, dt_hora_insert
+             FROM ganhador
+             LEFT JOIN premios ON premios.id_premio = ganhador.id_premio'
+        ) AS roleta_data(id_ganhador INT, nome TEXT, documento TEXT, contrato TEXT, documento_contrato_hash TEXT, id_premio INT, descricao_premio TEXT, dt_hora_insert DATE)
 ) AS r ON r.contrato = ca.codcontrato
 WHERE
-    ca.contrato_ativo = 1
-    AND venda_crm in (1,2)
+    venda_crm IN (1,2)
     AND ca.codplano IN (833, 1322,1330,1492,1501,1462,1458,1457,1456,1468,1467,1469,1501,1492,1330,1368)
-
-AND DATE_TRUNC('day', ca.dt_ativacao) BETWEEN DATE_TRUNC('day', '$pi'::date) AND DATE_TRUNC('day', '$pf'::date)
+    AND DATE_TRUNC('day', ca.adesao) BETWEEN DATE_TRUNC('day', '$pi'::date) AND DATE_TRUNC('day', '$pf'::date)
+    AND (ca.cancelado = 'N' AND (ca.suspenso = 'S' OR ca.suspenso = 'N' OR ca.suspenso IS NULL))
 ORDER BY
-  ca.dt_ativacao DESC";
+ca.adesao DESC;";
+
  //   echo $sql;
 /*
     $sql = "SELECT
