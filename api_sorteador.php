@@ -46,53 +46,40 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
 
 
  $sql = "SELECT
- REPLACE(REPLACE(REPLACE(REPLACE(COALESCE(cpf, cnpj), '.', ''), '-', ''), '/', ''), ' ', '') AS cpf_cnpj,
- nome_razaosocial AS nome,
- md5(
-   replace(replace(replace(
-     COALESCE(cpf, cnpj),
-     '.', ''), '-', ''), ' ', '')
- ) || contratos_ativos.codcontrato::text AS hash,
- contratos_ativos.codcontrato AS contrato
-FROM
- mk_pessoas
+    COALESCE(p.cpf, p.cnpj) AS documento, 
+    p.nome_razaosocial AS cliente, 
+    md5(replace(replace(replace(COALESCE(p.cpf, p.cnpj),'.', ''), '-', ''), ' ', '')) || ca.codcontrato::text AS hash,
+    ca.codcontrato AS contrato
+	FROM
+    mk_pessoas p
 LEFT JOIN (
- SELECT
-   mk_contratos.cliente,
-   mk_contratos.codcontrato,
-   mk_planos_acesso.codplano,
-   MAX(
-     CASE
-       WHEN mk_contratos.cancelado = 'N' AND (mk_contratos.suspenso = 'N' OR mk_contratos.suspenso IS NULL) THEN 1
-       ELSE 0
-     END
-   ) AS contrato_ativo,
-   MAX(mk_contratos.dt_ativacao) AS dt_ativacao,
-   MAX(mk_planos_acesso.descricao) AS descricao_plano
- FROM
-   mk_contratos
- LEFT JOIN mk_planos_acesso ON mk_planos_acesso.codplano = mk_contratos.plano_acesso
- GROUP BY
-   mk_contratos.cliente, mk_contratos.codcontrato, mk_planos_acesso.codplano
- HAVING
-   MAX(
-     CASE
-       WHEN mk_contratos.cancelado = 'N' AND (mk_contratos.suspenso = 'N' OR mk_contratos.suspenso IS NULL) THEN 1
-       ELSE 0
-     END
-   ) = 1
-) AS contratos_ativos ON mk_pessoas.codpessoa = contratos_ativos.cliente
-WHERE
- 
-contratos_ativos.contrato_ativo = 1
- AND contratos_ativos.codplano IN (833, 1322, 1330, 1456, 1458, 1467, 1457, 1468, 1469, 1492, 1501)
+    SELECT
+        mk_contratos.cliente,
+        mk_contratos.codcontrato,
+        mk_planos_acesso.codplano,
+        mk_contratos.cd_lead,
+        mk_contratos.cancelado,
+        mk_contratos.suspenso,
+        MAX(mk_contratos.adesao) AS adesao,
+        MAX(mk_contratos.dt_ativacao) AS dt_ativacao,
+        MAX(mk_planos_acesso.descricao) AS descricao_plano
+    FROM
+        mk_contratos
+    LEFT JOIN mk_planos_acesso ON mk_planos_acesso.codplano = mk_contratos.plano_acesso
+    GROUP BY
+        mk_contratos.cliente, mk_contratos.codcontrato, mk_planos_acesso.codplano, mk_contratos.cd_lead, mk_contratos.cancelado, mk_contratos.suspenso
+) AS ca ON p.codpessoa = ca.cliente
+LEFT JOIN mk_crm_leads on mk_crm_leads.codlead = ca.cd_lead
 
- AND md5(
-   replace(replace(replace(
-     COALESCE(cpf, cnpj),
-     '.', ''), '-', ''), ' ', '')
- ) || contratos_ativos.codcontrato::text = '".$hash."' 
+WHERE
+    venda_crm IN (1,2)
+    AND ca.codplano IN (833,1322,1330,1492,1501,1462,1458,1457,1456,1468,1467,1469,1501,1492,1330,1368)
+    AND (ca.cancelado = 'N' AND (ca.suspenso = 'S' OR ca.suspenso = 'N' OR ca.suspenso IS NULL))
+    AND md5(replace(replace(replace(COALESCE(p.cpf, p.cnpj),'.', ''), '-', ''), ' ', '')) || ca.codcontrato::text = '".$hash."' 
 ";
+
+
+
 
 
 $result = $conn->prepare($sql);
