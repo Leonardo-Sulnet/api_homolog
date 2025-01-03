@@ -14,7 +14,7 @@ $conn->exec("SET NAMES 'utf8'");
    //echo "conexão BD ok";
 
 
-   //Acessso ao servidor de API
+//Acessso ao servidor de API
 try {
 $conn_api = new PDO("pgsql:host=192.168.167.38 dbname=bd_api user=user_api password=HGDYA231gf");
 $conn_api->exec("SET NAMES 'utf8'");
