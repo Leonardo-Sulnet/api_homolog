@@ -6,10 +6,10 @@
 - **Apach2**
 
 #### Endpoint:
-- **URL**: '/api/xxx'
-- **Método HTTP**: GET
-- **Requer Autenticação**: SIM - 'Headers HTTT Authorization'
-- **Descrição**: Recebe dados de medição de energia e os insere no banco de dados após realizar validações.
+- **URL**: 'http://public-api.sulnet.net.br:9191/api/XXX'
+- **Método HTTP**: GET ou POST (checar)
+- **Requer Autenticação**: SIM - 'Headers HTTP: Authorization'
+- **Descrição**: Token deve ser liberado conforme API
 
 
 
@@ -73,5 +73,31 @@ Exemplo:    hash: hdfousgdoufguogduif12312
 {
 	"status": 200,
 	"hash_status": 0
+}
+```
+
+## API -> api_mail_queue_generator.php
+
+- Tem como Objetivo receber via parametro .
+- Essa API tem como obrigatório o preenchimento via POST dos Parametos a seguir:
+	- assunto
+	- mensagem
+	- destinatario
+
+#### `POST /api_mail_queue_generator.php`##
+
+##### Exemplo de Resposta para Email enfileirado com sucesso
+```json
+{
+	"status": 200,
+	"mail_queued": true
+}
+```
+
+##### Exemplo de Resposta para Email não enfileirado
+```json
+{
+	"status": 200,
+	"mail_queued": false
 }
 ```

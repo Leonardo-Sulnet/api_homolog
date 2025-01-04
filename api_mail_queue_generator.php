@@ -35,46 +35,45 @@ if (!$token) {
 
 // Valida o token e o acesso à API
 if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
-  // Se o token for válido e o usuário tiver acesso à API
- // echo json_encode(['success' => 'Acesso permitido']);
+                  // Se o token for válido e o usuário tiver acesso à API
+                  echo json_encode(['success' => 'Acesso permitido']);
 
- $assunto= $_POST["assunto"];
- $mensagem= $_POST["mensagem"];
- $emails= $_POST["emails"];  // Atributo recebido via POST emails seprado por ";"
-
-
- $sql = "INSERT INTO mail_queue
-    ";
-
-
-
-
-
-$result = $conn->prepare($sql);
-$result->execute();
-
-                       if (($result) and ($result->rowCount() != 0) ){
-
-                               //echo "Cliente encontrado<br>";
-                                 while ($row = $result->fetch(PDO::FETCH_ASSOC)){
-                                  $emparray[] = $row;
-
-
-                               }
-                               echo json_encode(['status' => 200, 'hash_status' => 1, 'cliente' => $emparray],JSON_UNESCAPED_UNICODE);
-                                                             
-                       }else{
-
-                              // echo "Nenhum cliente encontrado<br>";
-                               echo json_encode(['status' => 200, 'hash_status' => 0]);
-                       }       
+                  
+                  if (isset($_POST["assunto"], $_POST["mensagem"], $_POST["emails"])) {
+                    $assunto = $_POST["assunto"];
+                    $mensagem = $_POST["mensagem"];
+                    $emails = $_POST["emails"];
                 
-      
+                    // Verificar se os campos não estão vazios
+                    if (!empty($assunto) && !empty($mensagem) && !empty($emails)) {
+                       
+                          $sql = "INSERT INTO mail_queue
+                              ";
+
+                          $result = $conn->prepare($sql);
+                          $result->execute();
+
+                                                if (($result) and ($result->rowCount() != 0) ){
+
+                                                        //echo "Cliente encontrado<br>";
+                                                          while ($row = $result->fetch(PDO::FETCH_ASSOC)){
+                                                            $emparray[] = $row;
 
 
-
-
-
+                                                        }
+                                                        echo json_encode(['status' => 200, 'mail_queued' => true]);
+                                                                                      
+                                                }else{
+                                                        echo json_encode(['status' => 200, 'mail_queued' => false]);
+                                                }     
+                      } else {
+                        echo json_encode(['error' => 'Campos obrigatorios não preenchidos']);
+                        exit;
+                      }
+                  } else {
+                    echo json_encode(['error' => 'Campos obrigatorios não informados']);
+                    exit;
+                  }                                 
 } else {
   // Se o token for inválido ou o usuário não tiver acesso à API
   http_response_code(403); // Forbidden
