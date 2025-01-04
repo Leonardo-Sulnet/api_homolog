@@ -20,4 +20,20 @@ $conn_api->exec("SET NAMES 'utf8'");
     die($e->getMessage());
 }
 
+function conDBIntranet(){
+    $servername = "intranet.sulnet.net.br";
+    $username = "noc";
+    $password = "hp4543";
+    $dbname = "noc_gestao";
+
+    // Criar conexão
+    return  $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Verificar conexão
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+}
+
 ?>

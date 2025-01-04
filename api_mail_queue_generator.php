@@ -47,25 +47,25 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
                     // Verificar se os campos não estão vazios
                     if (!empty($assunto) && !empty($mensagem) && !empty($emails)) {
                        
-                          $sql = "INSERT INTO mail_queue
-                              ";
+                          $sql = "INSERT INTO mail_queue (
+                                  destinatario,
+                                  assunto,
+                                  mensagem
+                                  ) VALUES (?, ?, ?)";
 
-                          $result = $conn->prepare($sql);
-                          $result->execute();
+                          $conn = conDBIntranet();//Função que retorna cnexão com o banco
+                          $stmt = $conn->prepare($sql);
+                          $stmt->bind_param("sss",
+                                             $emails,
+                                             $assunto,
+                                             $mensagem
+                                             );
 
-                                                if (($result) and ($result->rowCount() != 0) ){
-
-                                                        //echo "Cliente encontrado<br>";
-                                                          while ($row = $result->fetch(PDO::FETCH_ASSOC)){
-                                                            $emparray[] = $row;
-
-
-                                                        }
-                                                        echo json_encode(['status' => 200, 'mail_queued' => true]);
-                                                                                      
+                                             if ($stmt->execute()){
+                                                      echo json_encode(['status' => 200, 'mail_queued' => true]);                              
                                                 }else{
-                                                        echo json_encode(['status' => 200, 'mail_queued' => false]);
-                                                }     
+                                                      echo json_encode(['status' => 200, 'mail_queued' => false]);
+                                              }     
                       } else {
                         echo json_encode(['status' => 200,'error' => 'Campos obrigatorios não preenchidos']);
                         exit;

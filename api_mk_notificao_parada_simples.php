@@ -54,31 +54,20 @@ $result = $conn->prepare($sql);
 $result->execute();
 
                         if (($result) and ($result->rowCount() != 0) ){
-
-                                //echo "Cliente encontrado<br>";
-                               
-
                                 while ($row = $result->fetch(PDO::FETCH_ASSOC)){
                                    // $emparray[] = mb_convert_encoding($row, 'UTF-8', 'ISO-8859-1');
                                    $emparray[] = $row;
-
-
                                 }
                                 echo json_encode(['status' => 200, 'status_notificacao' => 1, 'cliente' => $cpf_cnpj, 'conexoes_afetadas' => $emparray],JSON_UNESCAPED_UNICODE);
-                                //echo json_encode(['status' => 200, 'status_notificacao' => 1, 'cliente' => $cpf_cnpj]);
-                               // echo json_encode($emparray, true);
-                                
+                                                          
                         }else{
-
-                               // echo "Nenhum cliente encontrado<br>";
-                                echo json_encode(['status' => 200, 'status_notificacao' => 0]);
+                            echo json_encode(['status' => 200, 'status_notificacao' => 0]);
                         }       
                  
        
 
     }else {
-    
-            //aviso de erro
+
             echo json_encode(['status' => 404, 'autenticacao' => "falhou"]);   
 
     }
