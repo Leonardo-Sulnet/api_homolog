@@ -36,7 +36,7 @@ if (!$token) {
 // Valida o token e o acesso à API
 if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
                   // Se o token for válido e o usuário tiver acesso à API
-                  echo json_encode(['success' => 'Acesso permitido']);
+                  //echo json_encode(['success' => 'Acesso permitido']);
 
                   
                   if (isset($_POST["assunto"], $_POST["mensagem"], $_POST["emails"])) {
@@ -67,11 +67,11 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
                                                         echo json_encode(['status' => 200, 'mail_queued' => false]);
                                                 }     
                       } else {
-                        echo json_encode(['error' => 'Campos obrigatorios não preenchidos']);
+                        echo json_encode(['status' => 200,'error' => 'Campos obrigatorios não preenchidos']);
                         exit;
                       }
                   } else {
-                    echo json_encode(['error' => 'Campos obrigatorios não informados']);
+                    echo json_encode(['status' => 200,'error' => 'Campos obrigatorios não informados']);
                     exit;
                   }                                 
 } else {
