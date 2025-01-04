@@ -47,6 +47,11 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
                     // Verificar se os campos não estão vazios
                     if (!empty($assunto) && !empty($mensagem) && !empty($emails)) {
                        
+                        if(validarEmails($emails) == false){
+                          echo json_encode(['status' => 200, 'error' => 'Verificar formatação dos emails.']); 
+                          exit;
+                        }
+
                           $sql = "INSERT INTO mail_queue (
                                   destinatario,
                                   assunto,

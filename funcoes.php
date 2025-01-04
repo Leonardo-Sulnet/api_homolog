@@ -1,5 +1,26 @@
 <?php
-//require_once 'conexao.php';
+
+
+//Função para validar emaisl
+
+function validarEmails($emailString) {
+    // Remove espaços em branco antes e depois
+    $emailString = trim($emailString);
+
+    // Divide a string pelos ";"
+    $emails = explode(';', $emailString);
+
+    // Verifica se cada email é válido
+    foreach ($emails as $email) {
+        $email = trim($email); // Remove espaços extras
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false; // Se algum email for inválido, retorna falso
+        }
+    }
+
+    return true; // Todos os emails são válidos
+}
+
 
 /**
  * Valida o token e verifica se o usuário tem acesso à API especificada
