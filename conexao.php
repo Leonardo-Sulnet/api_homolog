@@ -22,10 +22,9 @@ $conn_api->exec("SET NAMES 'utf8'");
 
 function conDBIntranet(){
     $servername = "intranet.sulnet.net.br";
-    $username = "noc";
+    $username = "api_noc_gestao";
     $password = "hp4543";
     $dbname = "noc_gestao";
-
     // Criar conexão
     return  $conn = new mysqli($servername, $username, $password, $dbname);
 
