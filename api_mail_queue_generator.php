@@ -14,9 +14,9 @@ $headers = getallheaders();
 $token =  null;
 
 // Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
-if (isset($headers['Authorization']){
+if (isset($headers['Authorization'])) {
   $token =  $headers['Authorization'];
-} else if(isset($headers['authorization']){
+} else if(isset($headers['authorization'])){
   $token =  $headers['authorization'];
 }
 //$token = isset($headers['Authorization']) ? $headers['Authorization'] : null;
