@@ -11,9 +11,16 @@ header('Content-Type: application/json');
 $headers = getallheaders();
 //echo $headers['Authorization'];
 
+$token =  null;
+
 // Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
-$token = isset($headers['Authorization']) ? $headers['Authorization'] : null;
-$token = isset($headers['authorization']) ? $headers['authorization'] : null;
+if (isset($headers['Authorization']){
+  $token =  $headers['Authorization'];
+} else if(isset($headers['authorization']){
+  $token =  $headers['authorization'];
+}
+//$token = isset($headers['Authorization']) ? $headers['Authorization'] : null;
+//$token = isset($headers['authorization']) ? $headers['authorization'] : null;
 $apiPath = !empty($_SERVER['PHP_SELF']) ? basename($_SERVER['PHP_SELF']) : null;
 
 
