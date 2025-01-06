@@ -16,7 +16,7 @@ $token =  null;
 // Simulação de um endpoint de API recebendo um token no cabeçalho e o caminho de API
 if (isset($headers['Authorization'])) {
   $token =  $headers['Authorization'];
-} else if(isset($headers['authorization'])){
+} else if(isset($headers['authorization'])) {
   $token =  $headers['authorization'];
 }
 //$token = isset($headers['Authorization']) ? $headers['Authorization'] : null;
@@ -47,10 +47,10 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
                   //echo json_encode(['success' => 'Acesso permitido']);
 
                   
-                  if (isset($_POST["assunto"], $_POST["mensagem"], $_POST["emails"])) {
-                    $assunto = $_POST["assunto"];
-                    $mensagem = $_POST["mensagem"];
-                    $emails = $_POST["emails"];
+                  if (isset($_GET["assunto"], $_GET["mensagem"], $_GET["emails"])) {
+                    $assunto = $_GET["assunto"];
+                    $mensagem = $_GET["mensagem"];
+                    $emails = $_GET["emails"];
                 
                     // Verificar se os campos não estão vazios
                     if (!empty($assunto) && !empty($mensagem) && !empty($emails)) {
