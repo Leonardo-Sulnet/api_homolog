@@ -52,14 +52,9 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
                     $mensagem = $_GET["mensagem"];
                     $emails = $_GET["emails"];
 
-
-                    // Detectar a codificação atual (por exemplo, ISO-8859-1)
-                    $codificacao_atual = mb_detect_encoding($mensagem, 'UTF-8, ISO-8859-1, ASCII', true);
-                    //echo $codificacao_atual;
-                    // Converter para UTF-8 se não estiver nessa codificação
-                    if ($codificacao_atual !== 'UTF-8') {
-                        $mensagem = mb_convert_encoding($mensagem, 'UTF-8', $codificacao_atual);
-                    } 
+                    // Converter entidades HTML de volta aos caracteres normais
+                    $mensagem = html_entity_decode($mensagem, ENT_QUOTES | ENT_HTML401, 'UTF-8');
+                    
 
                 
                     // Verificar se os campos não estão vazios
