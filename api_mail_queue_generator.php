@@ -67,6 +67,8 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
                                   ) VALUES (?, ?, ?)";
 
                           $conn = conDBIntranet();//Função que retorna cnexão com o banco
+                          // Configurar conexão MySQL para UTF-8
+                          $conn->set_charset("utf8");
                           $stmt = $conn->prepare($sql);
                           $stmt->bind_param("sss",
                                              $emails,
