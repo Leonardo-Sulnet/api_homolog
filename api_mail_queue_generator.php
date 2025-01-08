@@ -51,6 +51,16 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
                     $assunto = $_GET["assunto"];
                     $mensagem = $_GET["mensagem"];
                     $emails = $_GET["emails"];
+
+
+                    // Detectar a codificação atual (por exemplo, ISO-8859-1)
+                    $codificacao_atual = mb_detect_encoding($mensagem, 'UTF-8, ISO-8859-1, ASCII', true);
+
+                    // Converter para UTF-8 se não estiver nessa codificação
+                    if ($codificacao_atual !== 'UTF-8') {
+                        $mensagem = mb_convert_encoding($mensagem, 'UTF-8', $codificacao_atual);
+                    } 
+
                 
                     // Verificar se os campos não estão vazios
                     if (!empty($assunto) && !empty($mensagem) && !empty($emails)) {
@@ -68,7 +78,7 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
 
                           $conn = conDBIntranet();//Função que retorna cnexão com o banco
                           // Configurar conexão MySQL para UTF-8
-                          $conn->set_charset("utf8");
+                          //$conn->set_charset("utf8");
                           $stmt = $conn->prepare($sql);
                           $stmt->bind_param("sss",
                                              $emails,
