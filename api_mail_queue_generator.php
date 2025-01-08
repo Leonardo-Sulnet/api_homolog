@@ -26,7 +26,7 @@ $apiPath = !empty($_SERVER['PHP_SELF']) ? basename($_SERVER['PHP_SELF']) : null;
 
 // LOG da REQUEST DE API
 
-$params = $_POST;  // Parâmetros da requisição (GET) ou $_POST para POST requests
+$params = $_GET;  // Parâmetros da requisição (GET) ou $_POST para POST requests
 $client_ip = $_SERVER['REMOTE_ADDR'];
 
 // Registrar a requisição na tabela api_logs

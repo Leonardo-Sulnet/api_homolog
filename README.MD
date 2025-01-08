@@ -79,12 +79,12 @@ Exemplo:    hash: hdfousgdoufguogduif12312
 ## API -> api_mail_queue_generator.php
 
 - Tem como Objetivo receber via parametro .
-- Essa API tem como obrigatório o preenchimento via POST dos Parametos a seguir:
+- Essa API tem como obrigatório o preenchimento via GET dos Parametos a seguir:
 	- assunto
 	- mensagem
 	- destinatario
 
-#### `POST /api_mail_queue_generator.php`##
+#### `GET /api_mail_queue_generator.php`##
 
 ##### Exemplo de Resposta para Email enfileirado com sucesso
 ```json
