@@ -21,16 +21,15 @@ $conn_api->exec("SET NAMES 'utf8'");
 }
 
 function conDBIntranet(){
-    $servername = "intranet.sulnet.net.br";
+    $servername = "mysql.sulnet.net.br";
     $username = "api_noc_gestao";
     $password = "hp4543";
     $dbname = "noc_gestao";
     // Criar conexão
-    return  $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Verificar conexão
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    try {
+        return  $conn = new mysqli($servername, $username, $password, $dbname);
+    } catch (Exception $e) {
+        die('Erro ao conectar no banco de dados: '.$e->getMessage());
     }
 
 }
