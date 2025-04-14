@@ -8,6 +8,8 @@ header('Content-Type: application/json');
 $headers = getallheaders();
 
 
+$headers = getallheaders();
+
 if (isset($headers['Authorization'])) {
     $token = $headers['Authorization'];
 
@@ -45,10 +47,11 @@ if (!$token) {
 
 
     if (empty($equipe) || empty($numero_os) || empty($setor)) { 
-        echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios vazios']);
+       echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios vazios']);
         exit;
     }
 
+<<<<<<< HEAD
 
     echo "<h3>Dados Inseridos:</h3>";
     echo "<p><strong>API ID:</strong> $api_id</p>";
@@ -61,11 +64,12 @@ if (!$token) {
     $insertQuery = "INSERT INTO * () VALUES ()";
     $statement = $pdo->prepare($insertQuery);
     $statement->bindValue(1, $sql);
+=======
+echo json_encode([
+    'equipe' => $equipe,
+    'numero_os' => $numero_os,
+    'setor' => $setor
+]);
+>>>>>>> 26e7738 (ajustes)
 
 
-    if ($statement->execute()) {
-        echo json_encode(['status' => 200, 'Execute' => true]);
-    } else {
-        echo json_encode(['status' => 200, 'Execute' => false]);
-    }
-//}
