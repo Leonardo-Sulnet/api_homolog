@@ -4,8 +4,8 @@
   },
   "autoload": {
     "files": [
-      "funcoes.php",
-      "conexao.php"
+      "helper/funcoes.php",
+      "helper/conexao.php"
     ]
   }
 }
