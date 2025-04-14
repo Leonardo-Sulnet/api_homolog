@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$DB_HOST=$_ENV['DB_ROLETA_HOST'];;
+$DB_HOST=$_ENV['DB_ROLETA_HOST'];
 $DB_PORT=$_ENV['DB_ROLETA_PORT'];
 $DB_USER=$_ENV['DB_ROLETA_USERNAME'];
 $DB_PASSWORD=$_ENV['DB_ROLETA_PASSWORD'];

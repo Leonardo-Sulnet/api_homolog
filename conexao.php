@@ -38,8 +38,8 @@ try {
 }
 
 
-$servidor_reagendamento = $_ENV['DB_REAGENDAMENTO__HOST'];
-$porta_reagendamento = $_ENV['DB_REAGENDAMENTO__PORT'];
+$servidor_reagendamento = $_ENV['DB_REAGENDAMENTO_HOST'];
+$porta_reagendamento = $_ENV['DB_REAGENDAMENTO_PORT'];
 $banco_reagendamento = $_ENV['DB_REAGENDAMENTO_DATABASE'];
 $usuario_reagendamento = $_ENV['DB_REAGENDAMENTO_USERNAME'];
 $senha_reagendamento = $_ENV['DB_REAGENDAMENTO_PASSWORD'];
@@ -58,7 +58,7 @@ function conDBIntranet()
 {
 
     $servidor_intranet = $_ENV['DB_INTRANET_HOST'];
-    //$porta_intranet = $_ENV['DB_INTRANET_PORT'];
+    $porta_intranet = $_ENV['DB_INTRANET_PORT'];
     $banco_intranet = $_ENV['DB_INTRANET_DATABASE'];
     $usuario_intranet = $_ENV['DB_INTRANET_USERNAME'];
     $senha_intranet = $_ENV['DB_INTRANET_PASSWORD'];

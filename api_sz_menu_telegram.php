@@ -5,6 +5,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
+$headers = getallheaders();
+
 
 if (isset($headers['Authorization'])) {
     $token = $headers['Authorization'];
@@ -53,7 +55,7 @@ if (!$token) {
     echo "<p><strong>API Name:</strong> $api_name</p>";
     echo "<p><strong>API Path:</strong> $api_path</p>";
     echo "<p><strong>Description:</strong> $description</p>";
-    
+
 
 /*
     $insertQuery = "INSERT INTO * () VALUES ()";
