@@ -1,7 +1,6 @@
 <?php
-include_once "conexao.php";
-include_once "funcoes.php";
 
+require_once __DIR__ . '/vendor/autoload.php';
 
 //$token = $_GET["token"];
 
@@ -82,7 +81,7 @@ WHERE
 
 
 
-$result = $conn->prepare($sql);
+$result = $conn_mk->prepare($sql);
 $result->execute();
 
                        if (($result) and ($result->rowCount() != 0) ){

@@ -1,12 +1,12 @@
 <?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
 $token = $_GET["token"];
 $cpf_cnpj = $_GET["cpf_cnpj"];
 
 
  if ( $token == '53w53WhGHHH124gfFdd13c' AND $cpf_cnpj != null){
-
-include_once ("conexao.php");
-;
 
 $sql = "
 SELECT 
@@ -50,7 +50,7 @@ FROM
     );
 ";
 
-$result = $conn->prepare($sql);
+$result = $conn_mk->prepare($sql);
 $result->execute();
 
                         if (($result) and ($result->rowCount() != 0) ){

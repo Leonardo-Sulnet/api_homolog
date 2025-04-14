@@ -1,6 +1,6 @@
 <?php
-include_once "conexao.php";
-include_once "funcoes.php";
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Permitir que qualquer origem acesse este recurso
 header("Access-Control-Allow-Origin: *");
@@ -104,4 +104,4 @@ if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
 
 
 
-?>
+

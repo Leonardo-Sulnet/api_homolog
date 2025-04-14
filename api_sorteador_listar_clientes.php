@@ -1,12 +1,12 @@
 <?php
-include_once "conexao.php";
-include_once "funcoes.php";
 
-$DB_HOST="192.168.167.38";
-$DB_PORT="5432";
-$DB_USER="user_sortedor";
-$DB_PASSWORD="0yC-:;2_%B4";
-$DB_NAME="bd_roleta";
+require_once __DIR__ . '/vendor/autoload.php';
+
+$DB_HOST=$_ENV['DB_ROLETA_HOST'];;
+$DB_PORT=$_ENV['DB_ROLETA_PORT'];
+$DB_USER=$_ENV['DB_ROLETA_USERNAME'];
+$DB_PASSWORD=$_ENV['DB_ROLETA_PASSWORD'];
+$DB_NAME=$_ENV['DB_ROLETA_DATABASE'];
 
 
 // Permitir que qualquer origem acesse este recurso
@@ -202,7 +202,7 @@ WHERE
 */
 
 
-$result = $conn->prepare($sql);
+$result = $conn_mk->prepare($sql);
 $result->execute();
 
                         if (($result) and ($result->rowCount() != 0) ){
