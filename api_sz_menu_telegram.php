@@ -7,7 +7,6 @@ header('Content-Type: application/json');
 
 $headers = getallheaders();
 
-
 if (isset($headers['Authorization'])) {
     $token = $headers['Authorization'];
 
@@ -57,6 +56,11 @@ if (empty($equipe) || empty($numero_os) || empty($setor)) {
     echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios vazios']);
     exit;
 }
+
+    echo($equipe) . PHP_EOL;
+    echo($numero_os . PHP_EOL);
+    echo($setor) . PHP_EOL;
+    echo($data) . PHP_EOL;
 
    // $insertQuery = "INSERT INTO reagendamento (equipe, numero_os,data_insert,id_setor) VALUES (:equipe, :numero_os,:data_insert:id_setor)";
  //   $statement = $conn_reagendamento->prepare($insertQuery);
