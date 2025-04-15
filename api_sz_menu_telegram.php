@@ -8,8 +8,6 @@ header('Content-Type: application/json');
 $headers = getallheaders();
 
 
-$headers = getallheaders();
-
 if (isset($headers['Authorization'])) {
     $token = $headers['Authorization'];
 
@@ -34,42 +32,42 @@ if (!$token) {
 }
 
 
-//if (validarTokenEAcesso($token, $apiPath, $conn_api)) {
+//if (!validar($token, $apiPath, $conni)) { 
+   // http_response_code(403); // Forbidden
+   // echo json_encode(['error' => 'Acesso negado']);
+    // echo json_encode(['path' => $apiPath]); // opcional para debug
+   // exit;
+//}
 
-    if (!isset($_GET["equipe"], $_GET["numero_os"], $_GET["setor"])) {
-        echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios não enviados']);
-        exit;
+
+if (!isset($_GET["equipe"], $_GET["numero_os"], $_GET["setor"])) {
+    echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios não enviados']);
+    exit;
+}
+
+$equipe = trim($_GET["equipe"]);
+$numero_os = trim($_GET["numero_os"]);
+$setor = trim($_GET["setor"]);
+
+date_default_timezone_set('America/Sao_Paulo');
+$data = date("Y-m-d H:i:s");
+
+
+if (empty($equipe) || empty($numero_os) || empty($setor)) {
+    echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios vazios']);
+    exit;
+}
+
+    $insertQuery = "INSERT INTO reagendamento (equipe, numero_os,data_insert,id_setor) VALUES (:equipe, :numero_os,:data_insert:id_setor)";
+    $statement = $conn_reagendamento->prepare($insertQuery);
+    $statement->bindValue(":equipe", $equipe);
+    $statement->bindValue(":numero_os", $numero_os);
+    $statement->bindValue(":data_insert", $data);
+    $statement->bindValue(":id_setor", $setor);
+
+    if ($statement->execute()) {
+        echo json_encode(['status' => 200, 'Execute' => true]);
+    } else {
+        echo json_encode(['status' => 200, 'Execute' => false]);
     }
-
-    $equipe = trim($_GET["equipe"]);
-    $numero_os = trim($_GET["numero_os"]);
-    $setor = trim($_GET["setor"]);
-
-
-    if (empty($equipe) || empty($numero_os) || empty($setor)) { 
-       echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios vazios']);
-        exit;
-    }
-
-<<<<<<< HEAD
-
-    echo "<h3>Dados Inseridos:</h3>";
-    echo "<p><strong>API ID:</strong> $api_id</p>";
-    echo "<p><strong>API Name:</strong> $api_name</p>";
-    echo "<p><strong>API Path:</strong> $api_path</p>";
-    echo "<p><strong>Description:</strong> $description</p>";
-
-
-/*
-    $insertQuery = "INSERT INTO * () VALUES ()";
-    $statement = $pdo->prepare($insertQuery);
-    $statement->bindValue(1, $sql);
-=======
-echo json_encode([
-    'equipe' => $equipe,
-    'numero_os' => $numero_os,
-    'setor' => $setor
-]);
->>>>>>> 26e7738 (ajustes)
-
-
+//}
