@@ -32,12 +32,12 @@ if (!$token) {
 }
 
 
-//if (!validar($token, $apiPath, $conni)) { 
-   // http_response_code(403); // Forbidden
-   // echo json_encode(['error' => 'Acesso negado']);
-    // echo json_encode(['path' => $apiPath]); // opcional para debug
-   // exit;
-//}
+if (!validarTokenEAcesso($token, $apiPath, $conn_api)) { 
+    http_response_code(403); // Forbidden
+    echo json_encode(['error' => 'Acesso negado']);
+    //echo json_encode(['path' => $apiPath]); // opcional para debug
+    exit;
+}
 
 
 if (!isset($_GET["equipe"], $_GET["numero_os"], $_GET["setor"])) {
