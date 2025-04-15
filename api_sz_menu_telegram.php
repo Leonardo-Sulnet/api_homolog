@@ -41,17 +41,17 @@ if (!validarTokenEAcesso($token, $apiPath, $conn_api)) {
 }
 
 
-if (!isset($_GET["equipe"], $_GET["numero_os"], $_GET["setor"])) {
+if (!isset($_GET['equipe'], $_GET['numero_os'], $_GET['setor'])) {
     echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios não enviados']);
     exit;
 }
 
-$equipe = trim($_GET["equipe"]);
-$numero_os = trim($_GET["numero_os"]);
-$setor = trim($_GET["setor"]);
+$equipe = trim($_GET['equipe']);
+$numero_os = trim($_GET['numero_os']);
+$setor = trim($_GET['setor']);
 
 date_default_timezone_set('America/Sao_Paulo');
-$data = date("Y-m-d H:i:s");
+$data = date('Y-m-d H:i:s');
 
 
 if (empty($equipe) || empty($numero_os) || empty($setor)) {
@@ -59,12 +59,13 @@ if (empty($equipe) || empty($numero_os) || empty($setor)) {
     exit;
 }
 
-    $insertQuery = "INSERT INTO reagendamento (equipe, numero_os,data_insert,id_setor) VALUES (:equipe, :numero_os,:data_insert:,id_setor)";
+    $conn_reagendamento->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $insertQuery = 'INSERT INTO reagendamento (equipe, numero_os,data_insert,id_setor) VALUES (:equipe, :numero_os,:data_insert,:id_setor)';
     $statement = $conn_reagendamento->prepare($insertQuery);
-    $statement->bindValue(":equipe", $equipe);
-    $statement->bindValue(":numero_os", $numero_os);
-    $statement->bindValue(":data_insert", $data);
-    $statement->bindValue(":id_setor", $setor);
+    $statement->bindValue(':equipe', $equipe);
+    $statement->bindValue(':numero_os', $numero_os);
+    $statement->bindValue(':data_insert', $data);
+    $statement->bindValue(':id_setor', $setor);
 
     if ($statement->execute()) {
         echo json_encode(['status' => 200, 'Execute' => true]);
