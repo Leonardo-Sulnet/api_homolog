@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+//require_once __DIR__ . '/vendor/autoload.php';
 
 $DB_HOST=$_ENV['DB_ROLETA_HOST'];
 $DB_PORT=$_ENV['DB_ROLETA_PORT'];
