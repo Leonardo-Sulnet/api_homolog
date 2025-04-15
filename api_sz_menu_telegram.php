@@ -1,8 +1,8 @@
 <?php
 
 //require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . 'conexao.php';
-require_once __DIR__ . 'funcoes.php';
+require 'conexao.php';
+require 'funcoes.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
