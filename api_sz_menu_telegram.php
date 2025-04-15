@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/conexao.php';
 require_once __DIR__ . '/funcoes.php';
 
@@ -23,7 +22,7 @@ $ipClient = $_SERVER['REMOTE_ADDR'];
 $params = $_GET; // Armazenando as informações do SZ.Chat
 
 
-//logApiRequest($conn_api, $token, $apiPath, $params, $ipClient); //Armazena o log do uso
+logApiRequest($conn_api, $token, $apiPath, $params, $ipClient); //Armazena o log do uso
 
 
 if (!$token) {
@@ -41,31 +40,38 @@ if (!validarTokenEAcesso($token, $apiPath, $conn_api)) {
 }
 
 
-if (!isset($_GET['equipe'], $_GET['numero_os'], $_GET['setor'])) {
+if (!isset($_GET['protocolo'], $_GET['opcao_menu'], $_GET['agente'],$_GET['date'], $_GET['entrada_dados'], $_GET['contato'], $_GET['canal'])) {
     echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios não enviados']);
     exit;
 }
 
-$equipe = trim($_GET['equipe']);
-$numero_os = trim($_GET['numero_os']);
-$setor = trim($_GET['setor']);
+$protocolo = trim($_GET['protocolo']);
+$opcao_menu = trim($_GET['opcao_menu']);
+$agente = trim($_GET['agente']);
+$date = trim($_GET['date']);
+$entrada_dados = trim($_GET['entrada_dados']);
+$contato = trim($_GET['contato']);
+$canal = trim($_GET['canal']);
 
-date_default_timezone_set('America/Sao_Paulo');
-$data = date('Y-m-d H:i:s');
 
-
-if (empty($equipe) || empty($numero_os) || empty($setor)) {
+if (empty($protocolo) || empty($opcao_menu) || empty($agente) || empty($date) || empty($entrada_dados) || empty($contato)|| empty($canal)) {
     echo json_encode(['status' => 400, 'error' => 'Campos obrigatórios vazios']);
     exit;
 }
 
     $conn_reagendamento->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $insertQuery = 'INSERT INTO reagendamento (equipe, numero_os,data_insert,id_setor) VALUES (?,?,?,?)';
+
+    $insertQuery = 'INSERT INTO reagendamento (protocolo, opcao_menu, agente, date, entrada_dados, contato, canal) VALUES (?,?,?,?,?,?,?)';
+
     $statement = $conn_reagendamento->prepare($insertQuery);
-    $statement->bindValue(1, $equipe);
-    $statement->bindValue(2, $numero_os);
-    $statement->bindValue(3, $data);
-    $statement->bindValue(4, $setor);
+    $statement->bindValue(1, $protocolo);
+    $statement->bindValue(2, $opcao_menu);
+    $statement->bindValue(3, $agente);
+    $statement->bindValue(4, $date);
+    $statement->bindValue(5, $entrada_dados);
+    $statement->bindValue(6, $contato);
+    $statement->bindValue(7, $canal);
+
 
     if ($statement->execute()) {
         echo json_encode(['status' => 200, 'Execute' => true]);
