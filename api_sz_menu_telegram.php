@@ -60,12 +60,12 @@ if (empty($equipe) || empty($numero_os) || empty($setor)) {
 }
 
     $conn_reagendamento->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $insertQuery = 'INSERT INTO reagendamento (equipe, numero_os,data_insert,id_setor) VALUES (:equipe, :numero_os,:data_insert,:id_setor)';
+    $insertQuery = 'INSERT INTO reagendamento (equipe, numero_os,data_insert,id_setor) VALUES (?,?,?,?)';
     $statement = $conn_reagendamento->prepare($insertQuery);
-    $statement->bindValue(':equipe', $equipe);
-    $statement->bindValue(':numero_os', $numero_os);
-    $statement->bindValue(':data_insert', $data);
-    $statement->bindValue(':id_setor', $setor);
+    $statement->bindValue(1, $equipe);
+    $statement->bindValue(2, $numero_os);
+    $statement->bindValue(3, $data);
+    $statement->bindValue(4, $setor);
 
     if ($statement->execute()) {
         echo json_encode(['status' => 200, 'Execute' => true]);
