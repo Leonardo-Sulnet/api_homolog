@@ -60,7 +60,7 @@ function validarTokenEAcesso($token, $apiPath, $conn_api) {
     $stmt->bindParam(':token_id', $tokenData['token_id'], PDO::PARAM_INT);
     $stmt->execute();
     $apiAccess = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    echo $apiAccess;
     return $apiAccess ? true : false;
 }
 
