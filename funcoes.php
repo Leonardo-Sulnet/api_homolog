@@ -2,7 +2,7 @@
 
 
 //Função para validar emaisl
-
+require_once __DIR__ . '/conexao.php';
 function validarEmails($emailString) {
     // Remove espaços em branco antes e depois
     $emailString = trim($emailString);
@@ -60,7 +60,6 @@ function validarTokenEAcesso($token, $apiPath, $conn_api) {
     $stmt->bindParam(':token_id', $tokenData['token_id'], PDO::PARAM_INT);
     $stmt->execute();
     $apiAccess = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo $apiAccess;
     return $apiAccess ? true : false;
 }
 

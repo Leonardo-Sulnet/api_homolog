@@ -1,8 +1,8 @@
 <?php
 
-//require_once __DIR__ . '/vendor/autoload.php';
-require 'conexao.php';
-require 'funcoes.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/conexao.php';
+require_once __DIR__ . '/funcoes.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -27,18 +27,18 @@ $params = $_GET; // Armazenando as informações do SZ.Chat
 
 
 if (!$token) {
-    http_response_code(401); // Unauthorized
+    http_response_code(401); 
     echo json_encode(['error' => 'Token não fornecido']);
     exit;
 }
 
 
-//if (!validarTokenEAcesso($token, $apiPath, $conn_api)) { 
-  //  http_response_code(403); // Forbidden
-  //  echo json_encode(['error' => 'Acesso negado']);
+if (!validarTokenEAcesso($token, $apiPath, $conn_api)) { 
+    http_response_code(403);
+    echo json_encode(['error' => 'Acesso negado']);
   //  echo json_encode(['path' => $apiPath]); // opcional para debug
- //   exit;
-//}
+   exit;
+}
 
 
 if (!isset($_GET["equipe"], $_GET["numero_os"], $_GET["setor"])) {
@@ -59,21 +59,16 @@ if (empty($equipe) || empty($numero_os) || empty($setor)) {
     exit;
 }
 
-    echo($equipe) . PHP_EOL;
-    echo($numero_os . PHP_EOL);
-    echo($setor) . PHP_EOL;
-    echo($data) . PHP_EOL;
+    $insertQuery = "INSERT INTO reagendamento (equipe, numero_os,data_insert,id_setor) VALUES (:equipe, :numero_os,:data_insert:,id_setor)";
+    $statement = $conn_reagendamento->prepare($insertQuery);
+    $statement->bindValue(":equipe", $equipe);
+    $statement->bindValue(":numero_os", $numero_os);
+    $statement->bindValue(":data_insert", $data);
+    $statement->bindValue(":id_setor", $setor);
 
-   // $insertQuery = "INSERT INTO reagendamento (equipe, numero_os,data_insert,id_setor) VALUES (:equipe, :numero_os,:data_insert:id_setor)";
- //   $statement = $conn_reagendamento->prepare($insertQuery);
-  //  $statement->bindValue(":equipe", $equipe);
-  //  $statement->bindValue(":numero_os", $numero_os);
-  //  $statement->bindValue(":data_insert", $data);
- //   $statement->bindValue(":id_setor", $setor);
+    if ($statement->execute()) {
+        echo json_encode(['status' => 200, 'Execute' => true]);
+    } else {
+        echo json_encode(['status' => 200, 'Execute' => false]);
+   }
 
- //   if ($statement->execute()) {
-//        echo json_encode(['status' => 200, 'Execute' => true]);
- //   } else {
- //       echo json_encode(['status' => 200, 'Execute' => false]);
- //   }
-//}

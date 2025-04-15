@@ -1,7 +1,6 @@
 <?php
 
-//require_once __DIR__ . '/vendor/autoload.php';
-//require_once __DIR__ . 'conexao.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -14,13 +13,13 @@ $banco_mk = $_ENV['DB_MK_DATABASE'];
 $usuario_mk = $_ENV['DB_MK_USERNAME'];
 $senha_mk = $_ENV['DB_MK_PASSWORD'];
 
-try {
-    $dsn_mk = "pgsql:host=$servidor_mk;port=$porta_mk;dbname=$banco_mk";
-    $conn_mk = new PDO($dsn_mk, $usuario_mk, $senha_mk);
-    $conn_mk->exec("SET NAMES 'utf8'");
-} catch (PDOException $e) {
-    die($e->getMessage());
-}
+//try {
+//    $dsn_mk = "pgsql:host=$servidor_mk;port=$porta_mk;dbname=$banco_mk";
+//    $conn_mk = new PDO($dsn_mk, $usuario_mk, $senha_mk);
+//    $conn_mk->exec("SET NAMES 'utf8'");
+//} catch (PDOException $e) {
+//    die($e->getMessage());
+//}
 
 //Acessso ao servidor de API
 
