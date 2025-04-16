@@ -59,23 +59,21 @@ if (empty($protocolo) || empty($opcao_menu) || empty($agente) || empty($date) ||
     exit;
 }
 
-    $conn_reagendamento->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$conn_reagendamento->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $insertQuery = 'INSERT INTO reagendamento (protocolo, opcao_menu, agente, date, entrada_dados, contato, canal) VALUES (?,?,?,?,?,?,?)';
+$insertQuery = 'INSERT INTO reagendamento (protocolo, opcao_menu, agente, date, entrada_dados, contato, canal) VALUES (?,?,?,?,?,?,?)';
 
-    $statement = $conn_reagendamento->prepare($insertQuery);
-    $statement->bindValue(1, $protocolo);
-    $statement->bindValue(2, $opcao_menu);
-    $statement->bindValue(3, $agente);
-    $statement->bindValue(4, $date);
-    $statement->bindValue(5, $entrada_dados);
-    $statement->bindValue(6, $contato);
-    $statement->bindValue(7, $canal);
+$statement = $conn_reagendamento->prepare($insertQuery);
+$statement->bindValue(1, $protocolo);
+$statement->bindValue(2, $opcao_menu);
+$statement->bindValue(3, $agente);
+$statement->bindValue(4, $date);
+$statement->bindValue(5, $entrada_dados);
+$statement->bindValue(6, $contato);
+$statement->bindValue(7, $canal);
 
-
-    if ($statement->execute()) {
-        echo json_encode(['status' => 200, 'Execute' => true]);
-    } else {
-        echo json_encode(['status' => 200, 'Execute' => false]);
-   }
-
+if ($statement->execute()) {
+   echo json_encode(['status' => 200, 'Execute' => true]);
+} else {
+   echo json_encode(['status' => 200, 'Execute' => false]);
+}
